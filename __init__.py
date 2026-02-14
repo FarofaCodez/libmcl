@@ -67,6 +67,7 @@ def download_file(url, target_path):
 			f.write(chunk)
 
 def get_libs(version_data):
+	# TODO: Handle older versions with funky artifact paths
 	for library in version_data["libraries"]:
 		url = library["downloads"]["artifact"]["url"]
 		if "aarch_64" in url.lower():
@@ -76,9 +77,8 @@ def get_libs(version_data):
 				download_file(url, "libraries/" + library["downloads"]["artifact"]["path"])
 	download_file(version_data["downloads"]["client"]["url"], "client.jar")
 
-# TODO: Microsoft auth, assets, natives
-
 def launch(version):
+	# TODO: Microsoft auth
 	try:
 		os.mkdir("game")
 	except:
