@@ -77,6 +77,11 @@ def get_libs(version_data):
 				download_file(url, "libraries/" + library["downloads"]["artifact"]["path"])
 	download_file(version_data["downloads"]["client"]["url"], "client.jar")
 
+import random
+import uuid
+name = "Player" + str(random.randint(1000, 9999))
+playerUuid = str(uuid.uuid4())
+
 def launch(version):
 	# TODO: Microsoft auth
 	try:
@@ -97,8 +102,8 @@ def launch(version):
 
 	command = f"java {' '.join(get_args(version)['jvm'])} net.minecraft.client.main.Main {' '.join(get_args(version)['game'])}"
 	command = command.replace("${classpath}", ":".join(libraries))
-	command = command.replace("${auth_player_name}", "Player")
-	command = command.replace("${auth_uuid}", "00000000-0000-0000-0000-000000000000")
+	command = command.replace("${auth_player_name}", name)
+	command = command.replace("${auth_uuid}", playerUuid)
 	command = command.replace("${auth_access_token}", "0")
 	command = command.replace("${auth_xuid}", "0")
 	command = command.replace("${version_name}", version["id"])
@@ -111,3 +116,6 @@ def launch(version):
 	command = command.replace("${launcher_name}", "libmcl")
 	command = command.replace("${natives_directory}", "natives")
 	os.system(command)
+
+if __name__ == "__main__":
+	launch("1.21.11")
