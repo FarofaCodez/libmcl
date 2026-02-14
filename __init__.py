@@ -110,6 +110,4 @@ def launch(version):
 	command = command.replace("${launcher_version}", "0.1")
 	command = command.replace("${launcher_name}", "libmcl")
 	command = command.replace("${natives_directory}", "natives")
-	with open("launch_command.sh", "w") as f:
-		f.write(command)
 	os.system(command)
